@@ -1,6 +1,10 @@
 # Family Feud Button
 The component  to the [Family Feud Board](https://github.com/ebron-tech/FamilyFeud). 
 Source code and instructions to create the buttons using Arduino.
+
+## Diagram 
+![](https://i.imgur.com/iBsgPsa.jpg)
+
 ## Requirements
 * Arduino nano.
 * DFPlayer. (buy it [[us](https://www.dfrobot.com/index.php?route=product/product&product_id=1121)][[mx](https://articulo.mercadolibre.com.mx/MLM-651633119-mini-modulo-reproductor-mp3-arduino-cdmx-electronica-_JM?quantity=1)])
@@ -10,6 +14,7 @@ Source code and instructions to create the buttons using Arduino.
 * 3.5mm stereo audio jack (headphones).
 * ULN2803
 * 12v power supply.
+* Micro SD card (old and low capacity).
 
 
 #### Assemble as you require
@@ -46,12 +51,10 @@ Has the perfect size and performance and for this project (doesnt require too mu
 Some people call it an H bridge, is used to convert the 5v Arduino output to 12v output commonly is used to power motors, led lights and anything that requires more voltage than the nominal power provided by Arduino.
 the component it's inside this project to power Each arcade button that contains a 12v led, but also to control 2 channels of RGB led lights for the players, With a few fixes the Arduino could use the available PWD pins D3, D5, D6 and D9, D10, D11 in order to set the value for each color (one port per color per channel), The pins have to be connected to the 6 ULN2803 available spaces in order to get the complete 12v.
 
-## Diagram 
-![](https://i.imgur.com/iBsgPsa.jpg)
 
 ## Code
 The Arduino script is inside this repo called winnerButton.ino.
-Initialize the button and led pins, the DFPlayer and on the loop section behavies as state machine. following 3 simple states
+Initialize the button and led pins, the DFPlayer and on the loop section behavies as state machine. following 3 simple states.
 ```cpp=48
 enum States{
   idle,          //waiting to be pressed
@@ -64,4 +67,4 @@ enum States{
 * dummy question but i accept that i google it: https://www.arduino.cc/en/tutorial/button
 * DFPlayer documentation: https://wiki.dfrobot.com/DFPlayer_Mini_SKU_DFR0299
 * ULN2803 http://2.bp.blogspot.com/-Hqpv4xndQCc/T1_be_UMb4I/AAAAAAAABCc/pF-63NGLrnQ/s1600/uln2803.PNG
-
+* Fritzing FDPlayer mini part: http://fritzing.org/projects/dfplayer-mini-part
