@@ -1,6 +1,6 @@
 # Family Feud Button
 The component  to the [Family Feud Board](https://github.com/ebron-tech/FamilyFeud). 
-Source code and instructions to create the button using arduino.
+Source code and instructions to create the buttons using Arduino.
 ## Requirements
 * Arduino nano.
 * DFPlayer. (buy it [[us](https://www.dfrobot.com/index.php?route=product/product&product_id=1121)][[mx](https://articulo.mercadolibre.com.mx/MLM-651633119-mini-modulo-reproductor-mp3-arduino-cdmx-electronica-_JM?quantity=1)])
@@ -37,6 +37,17 @@ the component it's inside this project to power Each arcade button that contains
 
 ## Diagram 
 ![](https://i.imgur.com/iBsgPsa.jpg)
+
+## Code
+The Arduino script is inside this repo called winnerButton.ino.
+Initialize the button and led pins, the DFPlayer and on the loop section behavies as state machine. following 3 simple states
+```cpp=48
+enum States{
+  idle,          //waiting to be pressed
+  buttonPressed, // when the one of the buttons is pressed
+  buttonBlink,   // blinking for a few seconds before return to idle status. 
+  }
+```
 
 ## References
 * dummy question but i accept that i google it: https://www.arduino.cc/en/tutorial/button
