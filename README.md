@@ -28,6 +28,17 @@ This is an mp3 player that can be triggered by Arduino, I used this because can 
     * Set volume.
     * Small eq.
     * Next, prev song.
+
+### Sounds
+DFPlayer reads the audios from the microSD or the USB memory, the ring audios are inside the path `/sounds` inside this repo.
+All audios need to have a name with a prefix beginning with the 4 digits number (like 0001_name) for example in this project the sounds used are:
+1. 0001_ringLeft.mp3
+2. 0002_ringRight.mp3
+3. 0003_ringMono.mp3
+
+The sounds are panned for each side if the left side won the ring is going to sound only on the left channel of speakers, the same for the right side.![](https://i.imgur.com/uMPK9li.jpg)
+
+
 ## Arduino Nano
 Has the perfect size and performance and for this project (doesnt require too much).![](https://i.imgur.com/zTJCAat.jpg)
 
