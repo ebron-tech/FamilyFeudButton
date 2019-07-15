@@ -31,9 +31,26 @@ const int buttonLeft = 4;      //The Left  Arcade button pin
 const int buttonRight = 2;     //The Right Arcade button pin
 const int ledLeft =  12;       //The Left  LED pin
 const int ledRight =  13;      //The Right LED pin
+
+const int lightRight_R= 3;    //Led light per channel and color
+const int lightRight_G= 5;
+const int lightRight_B= 6;
+const int lightLeft_R=  9;
+const int lightLeft_G=  10;
+const int lightLeft_B=  11;
 int buttonStateLeft = 0; 
 int buttonStateRight = 0; 
 
+class Color{
+  public:
+  Color();
+  Color(int r,int g,int b){
+    red=r;
+    green=g;
+    blue=b;
+  }
+  int red,green,blue;
+};
 //Player side contans the pins for the button and led, audio index and blinkStatus
 struct playerSide
  {
@@ -41,6 +58,9 @@ struct playerSide
      int button;
      int audio;
      int blinkState;
+     Color *colorPins;
+     Color *colorValues;
+     
  };
 typedef struct playerSide PlayerSide;
 playerSide rightSide,leftSide,pressedSide;
@@ -70,20 +90,41 @@ void setup()
   myDFPlayer.play(0);  //Play the first mp3
   
   //Set pins leds and button.
-  pinMode(ledRight, OUTPUT);
-  pinMode(ledLeft, OUTPUT);
   pinMode(buttonLeft, INPUT);
   pinMode(buttonRight, INPUT);
+  pinMode(ledRight, OUTPUT);
+  pinMode(ledLeft, OUTPUT);
+  pinMode(lightLeft_R, OUTPUT);
+  pinMode(lightLeft_G, OUTPUT);
+  pinMode(lightLeft_B, OUTPUT);
+  pinMode(lightRight_R, OUTPUT);
+  pinMode(lightRight_G, OUTPUT);
+  pinMode(lightRight_B, OUTPUT);
 
   //init playerSide objects:
+  //Init Left side
   leftSide.led = ledLeft;
   leftSide.button = buttonLeft;
-  leftSide.audio=1;
-  
+  leftSide.audio=1; //1 is the audio index in the USB or SD card
+  leftSide.colorPins= new Color(lightLeft_R,lightLeft_G,lightLeft_B);
+  leftSide.colorValues= new Color(0,0,0);
+
+  //Init Right side
   rightSide.led = ledRight;
   rightSide.button = buttonRight;
-  rightSide.audio=2;
+  rightSide.audio=2; //2 is the audio index in the USB or SD card
+  rightSide.colorPins = new Color(lightRight_R,lightRight_G,lightRight_B);
+  rightSide.colorValues= new Color(0,0,0);
   
+
+  
+  analogWrite(rightSide.colorPins->red,0);
+  analogWrite(rightSide.colorPins->green,0);
+  analogWrite(rightSide.colorPins->blue,255);
+
+  analogWrite(leftSide.colorPins->red,255);
+  analogWrite(leftSide.colorPins->green,0);
+  analogWrite(leftSide.colorPins->blue,0);
   //init state:idle
   state=idle;
 }
@@ -117,6 +158,10 @@ void loop()
         blinkTimer  = millis();
         pressedSide.blinkState=(pressedSide.blinkState==HIGH)?LOW:HIGH;
         digitalWrite(pressedSide.led,pressedSide.blinkState);
+        //Gold color is rgb(212,175,55)
+        digitalWrite(pressedSide.colorPins->red,212*pressedSide.blinkState);
+        digitalWrite(pressedSide.colorPins->green,175*pressedSide.blinkState);
+        digitalWrite(pressedSide.colorPins->blue,55*pressedSide.blinkState);
       }
       //Exit Timer:
       if (millis() - timer > 4000) {
@@ -124,7 +169,6 @@ void loop()
         digitalWrite(pressedSide.led,LOW);
         state=idle;
       }
-      break;
-    
+      break; 
+    }
   }
-}
